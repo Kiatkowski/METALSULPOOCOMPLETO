@@ -1,10 +1,18 @@
-from database.conexao import Conexao
+from datetime import date
+from models.funcionario import Funcionario
+
 
 def main():
-    conexao = Conexao()
-    print("Conexão com o banco de dados estabelecida com sucesso!")
-
-    conexao.fechar()  # Fechar a conexão com o banco de dados
+    funcionario = Funcionario(
+        nome="João da Silva",
+        cpf="123.456.789-00",
+        cargo="Analista de Sistemas",
+        departamento="TI",
+        salario=5000.00,
+        status="ATIVO",
+        data_admissao=date.today()
+    )
+    print(funcionario)
 
 if __name__ == "__main__":
     main()    

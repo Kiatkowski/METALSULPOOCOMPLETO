@@ -40,12 +40,15 @@ class Funcionario:
         self.status = status
         self.observacoes = observacoes
 
+
     def __str__(self):
         return(
-            f"Funcionário: {self.nome}"
-            f"CPF: {self.cpf}"
-            f"Cargo: {self.cargo}"
-            f"Departamento: {self.departamento}"
-            f"Salário: {self.salario}"
-            f"Status: {self.status}"
-            )
+            f'=== DADOS FUNCIONÁRIO ===\n'
+            f'Funcionário: {self.nome}\n'
+            f'CPF do funcionário: {self.cpf}\n'
+            f'Cargo do funcionário: {self.cargo}\n'
+            f'Departamento do funcionário: {self.departamento}\n'
+            f'Salário do funcionário: {self.salario}\n'
+            f'Status: {self.status}\n'
+            f'{'='*30}'
+        )
