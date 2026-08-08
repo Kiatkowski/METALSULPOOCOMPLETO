@@ -1,18 +1,27 @@
-from datetime import date
-from models.funcionario import Funcionario
+from repositories.funcionario_repository import FuncionarioRepository
 
 
 def main():
-    funcionario = Funcionario(
-        nome="João da Silva",
-        cpf="123.456.789-00",
-        cargo="Analista de Sistemas",
-        departamento="TI",
-        salario=5000.00,
-        status="ATIVO",
-        data_admissao=date.today()
-    )
-    print(funcionario)
+
+    repository = FuncionarioRepository()
+
+    funcionarios = repository.listar()
+
+    if len(funcionarios) == 0:
+
+        print("Nenhum funcionário cadastrado.")
+
+    else:
+
+        for funcionario in funcionarios:
+
+            print(funcionario)
+
+            print("-" * 50)
+
+    repository.fechar()
+
 
 if __name__ == "__main__":
-    main()    
+
+    main()
