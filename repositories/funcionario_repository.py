@@ -63,47 +63,27 @@ class FuncionarioRepository:
             registro = self.db.cursor.fetchone()
 
             if registro is None:
-
                 return None
 
             funcionario = Funcionario(
-
                 id_funcionario=registro[0],
-
                 nome=registro[1],
-
                 cpf=registro[2],
-
                 rg=registro[3],
-
                 data_nascimento=registro[4],
-
                 sexo=registro[5],
-
                 estado_civil=registro[6],
-
                 email=registro[7],
-
                 telefone=registro[8],
-
                 celular=registro[9],
-
                 cargo=registro[10],
-
                 departamento=registro[11],
-
                 salario=registro[12],
-
                 data_admissao=registro[13],
-
                 data_demissao=registro[14],
-
                 turno=registro[15],
-
                 status=registro[16],
-
                 observacoes=registro[17]
-
             )
 
             return funcionario
@@ -137,43 +117,24 @@ class FuncionarioRepository:
             for registro in registros:
 
                 funcionario = Funcionario(
-
                     id_funcionario=registro[0],
-
                     nome=registro[1],
-
                     cpf=registro[2],
-
                     rg=registro[3],
-
                     data_nascimento=registro[4],
-
                     sexo=registro[5],
-
                     estado_civil=registro[6],
-
                     email=registro[7],
-
                     telefone=registro[8],
-
                     celular=registro[9],
-
                     cargo=registro[10],
-
                     departamento=registro[11],
-
                     salario=registro[12],
-
                     data_admissao=registro[13],
-
                     data_demissao=registro[14],
-
                     turno=registro[15],
-
                     status=registro[16],
-
                     observacoes=registro[17]
-
                 )
 
                 funcionarios.append(funcionario)
@@ -181,14 +142,100 @@ class FuncionarioRepository:
             return funcionarios
 
         except Exception as erro:
-
             print(f"Erro ao listar funcionários: {erro}")
-
             return []
 
     def atualizar(self, funcionario):
-        pass
+        sql = """
+            UPDATE funcionario
+            SET nome = %s,
+                cpf = %s,
+                rg = %s,
+                data_nascimento = %s,
+                sexo = %s,
+                estado_civil = %s,
+                email = %s,
+                telefone = %s,
+                celular = %s,
+                cargo = %s,
+                departamento = %s,
+                salario = %s,
+                data_admissao = %s,
+                data_demissao = %s,
+                turno = %s,
+                status = %s,
+                observacoes = %s
+            WHERE id_funcionario = %s
+        """
+        valores = (
+        funcionario.nome,
+        funcionario.cpf,
+        funcionario.rg,
+        funcionario.data_nascimento,
+        funcionario.sexo,
+        funcionario.estado_civil,
+        funcionario.email,
+        funcionario.telefone,
+        funcionario.celular,
+        funcionario.cargo,
+        funcionario.departamento,
+        funcionario.salario,
+        funcionario.data_admissao,
+        funcionario.data_demissao,
+        funcionario.turno,
+        funcionario.status,
+        funcionario.observacoes,
+        funcionario.id_funcionario
+    )
+
+        try:
+            self.db.cursor.execute(sql, valores)
+            self.db.commit()
+            if self.db.cursor.rowcount == 0:
+                print("Nenhum funcionário encontrado com o ID fornecido.")
+            print("Funcionário atualizado com sucesso!")
+        except Exception as erro:
+            self.db.rollback()
+            print(f"Erro ao atualizar funcionário: {erro}")
+
     def excluir(self, id_funcionario):
-        pass
+        sql = """
+            DELETE FROM funcionario
+            WHERE id_funcionario = %s
+        """
+        try:
+            self.db.cursor.execute(sql, (id_funcionario,))
+            self.db.commit()
+            if self.db.cursor.rowcount == 0:
+                print("Nenhum funcionário encontrado com o ID fornecido.")
+            else:
+                print("Funcionário excluído com sucesso!")
+        except Exception as erro:
+            self.db.rollback()
+            print(f"Erro ao excluir funcionário: {erro}")
+            
+    def criar_funcionario(self, registro):
+        return Funcionario(
+            
+        id_funcionario=registro[0],
+        nome=registro[1],
+        cpf=registro[2],
+        rg=registro[3],
+        data_nascimento=registro[4],
+        sexo=registro[5],
+        estado_civil=registro[6],
+        email=registro[7],
+        telefone=registro[8],
+        celular=registro[9],
+        cargo=registro[10],
+        departamento=registro[11],
+        salario=registro[12],
+        data_admissao=registro[13],
+        data_demissao=registro[14],
+        turno=registro[15],
+        status=registro[16],
+        observacoes=registro[17]
+
+    )
     def fechar(self):
         self.db.fechar()

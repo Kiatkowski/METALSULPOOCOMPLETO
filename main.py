@@ -1,26 +1,11 @@
+from datetime import date
+from models.funcionario import Funcionario
 from repositories.funcionario_repository import FuncionarioRepository
-
+from menu import Menu
 
 def main():
-
-    repository = FuncionarioRepository()
-
-    funcionarios = repository.listar()
-
-    if len(funcionarios) == 0:
-
-        print("Nenhum funcionário cadastrado.")
-
-    else:
-
-        for funcionario in funcionarios:
-
-            print(funcionario)
-
-            print("-" * 50)
-
-    repository.fechar()
-
+    menu = Menu()
+    menu.exibir()
 
 if __name__ == "__main__":
 
